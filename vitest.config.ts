@@ -9,6 +9,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     css: true,
+    reporters: ['default', 'junit'],          // 🔥 Required for Jenkins
+    outputFile: './frontend-tests.xml',      // 🔥 Jenkins will read this
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
@@ -28,4 +30,3 @@ export default defineConfig({
     },
   },
 });
-

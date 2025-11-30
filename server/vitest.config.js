@@ -4,6 +4,8 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
+    reporters: ['default', 'junit'],        // 🔥 Jenkins
+    outputFile: './backend-tests.xml',      // 🔥 Jenkins
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
@@ -16,4 +18,3 @@ export default defineConfig({
     },
   },
 });
-
