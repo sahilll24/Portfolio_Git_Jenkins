@@ -57,32 +57,24 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Check SonarScanner') {
+       stage('Pre-Cleanup') {
     steps {
-        sh 'echo PATH is: $PATH'
-        sh 'which sonar-scanner'
-        sh 'sonar-scanner -v'
+        sh """
+            echo "Cleaning previous Sonar artifacts..."
+            rm -rf .sonar
+            rm -rf .scannerwork
+        """
     }
 }
 
-
-        stage('SonarQube Analysis') {
+stage('SonarQube Analysis') {
     steps {
-        echo "Running SonarQube scan..."
-
         withSonarQubeEnv('sonar-server') {
             sh """
                 sonar-scanner \
                 -Dsonar.projectKey=Portfolio_Git_Jenkins \
-                -Dsonar.projectName=Portfolio_Git_Jenkins \
-                -Dsonar.projectVersion=1.0 \
                 -Dsonar.sources=src \
-                -Dsonar.tests=src \
-                -Dsonar.test.inclusions=**/*.test.ts,**/*.test.tsx \
-                -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/*.config.js,**/*.config.ts \
                 -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
-                -Dsonar.typescript.tsconfigPath=tsconfig.json \
-                -Dsonar.sourceEncoding=UTF-8 \
                 -Dsonar.host.url=http://localhost:9000 \
                 -Dsonar.login=$SONAR_TOKEN
             """
@@ -90,15 +82,13 @@ pipeline {
     }
 }
 
-
-        stage("Quality Gate") {
-            steps {
-                timeout(time: 2, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
+stage('Quality Gate') {
+    steps {
+        timeout(time: 10, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
         }
-
+    }
+}
         stage('Archive Reports') {
             steps {
                 archiveArtifacts artifacts: 'coverage/**', allowEmptyArchive: true
