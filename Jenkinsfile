@@ -57,6 +57,14 @@ pipeline {
                 sh 'npm run build'
             }
         }
+        stage('Check SonarScanner') {
+    steps {
+        sh 'echo PATH is: $PATH'
+        sh 'which sonar-scanner'
+        sh 'sonar-scanner -v'
+    }
+}
+
 
         stage('SonarQube Analysis') {
             steps {
