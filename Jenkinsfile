@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         nodejs "node20"
-        sonarQubeScanner "sonar-scanner"
+        sonarRunner "sonar-scanner"
     }
 
     options {
@@ -47,7 +47,6 @@ pipeline {
             }
             post {
                 always {
-                    echo "Publishing test reports..."
                     junit '**/*tests.xml'
                 }
             }
@@ -55,14 +54,13 @@ pipeline {
 
         stage('Build Frontend (Vite)') {
             steps {
-                echo "Building Vite frontend..."
                 sh 'npm run build'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                echo "Starting SonarQube scan..."
+                echo "Running SonarQube scan..."
 
                 withSonarQubeEnv('sonar-server') {
                     sh """
@@ -88,7 +86,6 @@ pipeline {
 
         stage('Archive Reports') {
             steps {
-                echo "Archiving coverage & build artifacts..."
                 archiveArtifacts artifacts: 'coverage/**', allowEmptyArchive: true
                 archiveArtifacts artifacts: 'dist/**', allowEmptyArchive: true
             }
@@ -97,10 +94,10 @@ pipeline {
 
     post {
         success {
-            echo "🎉 CI Pipeline Completed Successfully!"
+            echo "🎉 Pipeline Completed Successfully!"
         }
         failure {
-            echo "❌ CI Pipeline Failed. Check logs."
+            echo "❌ Pipeline Failed."
         }
     }
 }
