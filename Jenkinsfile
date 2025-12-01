@@ -1,15 +1,17 @@
 pipeline {
     agent any
+
     tools {
         nodejs "node20"
-        SonarQubeScanner "sonar-scanner"
+        sonarQubeScanner "sonar-scanner"
+    }
 
+    options {
+        timestamps()
     }
-   options {
-        timestamps()     
-    }
+
     environment {
-        SONAR_TOKEN = credentials('sonar-token')  
+        SONAR_TOKEN = credentials('sonar-token')
     }
 
     stages {
@@ -43,7 +45,6 @@ pipeline {
                     sh 'npm run test -- --coverage --reporter=junit --outputFile=backend-tests.xml'
                 }
             }
-
             post {
                 always {
                     echo "Publishing test reports..."
@@ -60,22 +61,22 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-             steps {
-                 echo "Starting SonarQube scan..."
+            steps {
+                echo "Starting SonarQube scan..."
 
-             withSonarQubeEnv('sonar-server') {
-               sh """
-                sonar-scanner \
-                -Dsonar.projectKey=Portfolio_Git_Jenkins \
-                -Dsonar.projectName=Portfolio_Git_Jenkins \
-                -Dsonar.sources=./ \
-                -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info,server/coverage/lcov.info \
-                -Dsonar.host.url=http://localhost:9000 \
-                -Dsonar.login=$SONAR_TOKEN
-            """
+                withSonarQubeEnv('sonar-server') {
+                    sh """
+                        sonar-scanner \
+                        -Dsonar.projectKey=Portfolio_Git_Jenkins \
+                        -Dsonar.projectName=Portfolio_Git_Jenkins \
+                        -Dsonar.sources=. \
+                        -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info,server/coverage/lcov.info \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=$SONAR_TOKEN
+                    """
+                }
+            }
         }
-    }
-}
 
         stage("Quality Gate") {
             steps {
@@ -103,6 +104,3 @@ pipeline {
         }
     }
 }
-
-
-
