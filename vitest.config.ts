@@ -9,21 +9,32 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     css: true,
-    reporters: ['default', 'junit'],          // 🔥 Required for Jenkins
-    outputFile: './frontend-tests.xml',      // 🔥 Jenkins will read this
+
+    // ---------------------------
+    // Jenkins Reporters
+    // ---------------------------
+    reporters: ['default', 'junit'],
+    outputFile: './frontend-tests.xml',
+
+    // ---------------------------
+    // Coverage for SonarQube
+    // ---------------------------
     coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html' ,'lcov'],
-      exclude: [
-        'node_modules/',
-        'src/test/',
-        '**/*.d.ts',
-        '**/*.config.*',
-        '**/mockData',
-        '**/*.test.{ts,tsx}',
-      ],
-    },
+  provider: 'v8',                        // keep this — required by Vitest
+  reporter: ['text', 'json', 'html', 'lcov'], 
+  reportsDirectory: './coverage',        // SonarQube will find lcov.info here
+
+  exclude: [
+    'node_modules/',
+    'src/test/',
+    '**/*.d.ts',
+    '**/*.config.*',
+    '**/mockData',
+    '**/*.test.{ts,tsx}',
+  ],
+},
   },
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

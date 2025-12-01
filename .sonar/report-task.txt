@@ -1,0 +1,6 @@
+projectKey=Portfolio_Git_Jenkins
+serverUrl=http://localhost:9000
+serverVersion=25.11.0.114957
+dashboardUrl=http://localhost:9000/dashboard?id=Portfolio_Git_Jenkins
+ceTaskId=90437d51-6be4-4b6c-939a-8c102cc009de
+ceTaskUrl=http://localhost:9000/api/ce/task?id=90437d51-6be4-4b6c-939a-8c102cc009de

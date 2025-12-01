@@ -67,22 +67,29 @@ pipeline {
 
 
         stage('SonarQube Analysis') {
-            steps {
-                echo "Running SonarQube scan..."
+    steps {
+        echo "Running SonarQube scan..."
 
-                withSonarQubeEnv('sonar-server') {
-                    sh """
-                        sonar-scanner \
-                        -Dsonar.projectKey=Portfolio_Git_Jenkins \
-                        -Dsonar.projectName=Portfolio_Git_Jenkins \
-                        -Dsonar.sources=. \
-                        -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info,server/coverage/lcov.info \
-                        -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.login=$SONAR_TOKEN
-                    """
-                }
-            }
+        withSonarQubeEnv('sonar-server') {
+            sh """
+                sonar-scanner \
+                -Dsonar.projectKey=Portfolio_Git_Jenkins \
+                -Dsonar.projectName=Portfolio_Git_Jenkins \
+                -Dsonar.projectVersion=1.0 \
+                -Dsonar.sources=src \
+                -Dsonar.tests=src \
+                -Dsonar.test.inclusions=**/*.test.ts,**/*.test.tsx \
+                -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/*.config.js,**/*.config.ts \
+                -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
+                -Dsonar.typescript.tsconfigPath=tsconfig.json \
+                -Dsonar.sourceEncoding=UTF-8 \
+                -Dsonar.host.url=http://localhost:9000 \
+                -Dsonar.login=$SONAR_TOKEN
+            """
         }
+    }
+}
+
 
         stage("Quality Gate") {
             steps {

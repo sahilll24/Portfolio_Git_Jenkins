@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="44" failures="0" errors="0" time="9.425">
+    <testsuite name="src/__tests__/pages/Contact.test.tsx" timestamp="2025-12-01T20:59:02.547Z" hostname="VICTUS" tests="10" failures="0" errors="0" skipped="0" time="4.582865337">
+        <testcase classname="src/__tests__/pages/Contact.test.tsx" name="Contact Form &gt; renders contact form with all fields" time="0.335971597">
+            <system-err>
+Warning: React does not recognize the `whileHover` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `whilehover` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+    at div
+    at div (/home/sahil/desktop/sahil-devops-portfolio/src/__tests__/pages/Contact.test.tsx:16:21)
+    at div
+    at div
+    at div (/home/sahil/desktop/sahil-devops-portfolio/src/__tests__/pages/Contact.test.tsx:16:21)
+    at div
+    at section
+    at div
+    at Contact (/home/sahil/desktop/sahil-devops-portfolio/src/pages/Contact.tsx:22:59)
+    at Router (/home/sahil/desktop/sahil-devops-portfolio/node_modules/react-router/dist/umd/react-router.development.js:1207:17)
+    at BrowserRouter (/home/sahil/desktop/sahil-devops-portfolio/node_modules/react-router-dom/dist/umd/react-router-dom.development.js:695:7)
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+            </system-err>
+        </testcase>
+        <testcase classname="src/__tests__/pages/Contact.test.tsx" name="Contact Form &gt; renders contact information section" time="0.058043682">
+        </testcase>
+        <testcase classname="src/__tests__/pages/Contact.test.tsx" name="Contact Form &gt; updates form fields on input" time="0.699440034">
+        </testcase>
+        <testcase classname="src/__tests__/pages/Contact.test.tsx" name="Contact Form &gt; validates required fields" time="0.095528238">
+        </testcase>
+        <testcase classname="src/__tests__/pages/Contact.test.tsx" name="Contact Form &gt; validates email format" time="0.039273484">
+        </testcase>
+        <testcase classname="src/__tests__/pages/Contact.test.tsx" name="Contact Form &gt; submits form successfully with valid data" time="0.680757216">
+        </testcase>
+        <testcase classname="src/__tests__/pages/Contact.test.tsx" name="Contact Form &gt; shows error message on API failure" time="0.676068224">
+            <system-err>
+Error sending message: Error: Failed to send email
+    at handleSubmit (/home/sahil/desktop/sahil-devops-portfolio/src/pages/Contact.tsx:38:15)
+
+            </system-err>
+        </testcase>
+        <testcase classname="src/__tests__/pages/Contact.test.tsx" name="Contact Form &gt; handles network errors gracefully" time="0.684968669">
+            <system-err>
+Error sending message: Error: Network error
+    at /home/sahil/desktop/sahil-devops-portfolio/src/__tests__/pages/Contact.test.tsx:222:50
+    at file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:146:14
+    at file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:533:11
+    at runWithTimeout (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:39:7)
+    at runTest (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:1056:17)
+    at runSuite (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runSuite (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runFiles (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:1262:5)
+    at startTests (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:1271:3)
+    at file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/vitest/dist/chunks/runBaseTests.3qpJUEJM.js:126:11
+
+            </system-err>
+        </testcase>
+        <testcase classname="src/__tests__/pages/Contact.test.tsx" name="Contact Form &gt; disables submit button while submitting" time="0.65370837">
+        </testcase>
+        <testcase classname="src/__tests__/pages/Contact.test.tsx" name="Contact Form &gt; calls API with correct endpoint" time="0.65473224">
+        </testcase>
+    </testsuite>
+    <testsuite name="server/__tests__/emailTemplates.test.js" timestamp="2025-12-01T20:59:02.566Z" hostname="VICTUS" tests="20" failures="0" errors="0" skipped="0" time="0.025282574">
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createNotificationEmail &gt; should generate HTML notification email" time="0.00474086">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createNotificationEmail &gt; should include name in email HTML" time="0.000970122">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createNotificationEmail &gt; should include email in email HTML" time="0.000498003">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createNotificationEmail &gt; should include subject in email HTML" time="0.000524387">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createNotificationEmail &gt; should include message in email HTML" time="0.000413151">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createNotificationEmail &gt; should escape HTML special characters to prevent XSS" time="0.001240111">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createNotificationEmail &gt; should handle messages with newlines" time="0.001020104">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createNotificationEmail &gt; should include proper HTML structure" time="0.000840246">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createNotificationEmail &gt; should include site color scheme in CSS" time="0.000828447">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createNotificationEmail &gt; should include mailto link for reply" time="0.00090343">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createConfirmationEmail &gt; should generate HTML confirmation email" time="0.000719243">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createConfirmationEmail &gt; should include name in email HTML" time="0.000751752">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createConfirmationEmail &gt; should include subject in email HTML" time="0.000617792">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createConfirmationEmail &gt; should include thank you message" time="0.000661912">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createConfirmationEmail &gt; should escape HTML special characters to prevent XSS" time="0.000447739">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createConfirmationEmail &gt; should include proper HTML structure" time="0.001111195">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createConfirmationEmail &gt; should include site color scheme in CSS" time="0.000655425">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createConfirmationEmail &gt; should include sender name in email" time="0.000637232">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createConfirmationEmail &gt; should include email address in footer" time="0.000836858">
+        </testcase>
+        <testcase classname="server/__tests__/emailTemplates.test.js" name="Email Templates &gt; createConfirmationEmail &gt; should handle special characters in name and subject" time="0.001075195">
+        </testcase>
+    </testsuite>
+    <testsuite name="server/__tests__/index.test.js" timestamp="2025-12-01T20:59:02.585Z" hostname="VICTUS" tests="14" failures="0" errors="0" skipped="0" time="0.210660668">
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should send email successfully with valid data" time="0.11041747">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should return 400 if name is missing" time="0.009218186">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should return 400 if email is missing" time="0.006989115">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should return 400 if subject is missing" time="0.006549497">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should return 400 if message is missing" time="0.006584377">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should return 400 for invalid email format" time="0.00552722">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should return 400 for email without domain" time="0.007130663">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should return 400 for email without @ symbol" time="0.005374121">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should return 500 on email send failure" time="0.011902381">
+            <system-err>
+Error sending email: Error: SMTP connection failed
+    at /home/sahil/desktop/sahil-devops-portfolio/server/__tests__/index.test.js:200:42
+    at file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:146:14
+    at file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:533:11
+    at runWithTimeout (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:39:7)
+    at runTest (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:1056:17)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at runSuite (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runSuite (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runSuite (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runFiles (file:///home/sahil/desktop/sahil-devops-portfolio/node_modules/@vitest/runner/dist/index.js:1262:5)
+
+            </system-err>
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should handle empty string fields as missing" time="0.006846302">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should handle whitespace-only fields as missing" time="0.007422693">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should include HTML in notification email" time="0.006200743">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; POST /api/contact &gt; should include HTML in confirmation email" time="0.0065915">
+        </testcase>
+        <testcase classname="server/__tests__/index.test.js" name="Contact API &gt; GET /api/health &gt; should return 200 with status ok" time="0.008677757">
+        </testcase>
+    </testsuite>
+</testsuites>
