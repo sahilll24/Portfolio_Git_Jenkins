@@ -1,8 +1,9 @@
 pipeline {
     agent any
     tools {
-    nodejs "node20"
-    sonarScanner "sonar-scanner"
+        nodejs "node20"
+        SonarQubeScanner "sonar-scanner"
+
     }
    options {
         timestamps()     
