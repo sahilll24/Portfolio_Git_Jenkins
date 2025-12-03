@@ -105,14 +105,25 @@ stage('Quality Gate') {
                 archiveArtifacts artifacts: 'dist/**', allowEmptyArchive: true
             }
         }
+        
     }
 
     post {
         success {
             echo "🎉 Pipeline Completed Successfully!"
+            emailext(
+                to:"sahilsaykar24@gmail.com",
+                subject:"Successfully Pipeline Excuted..'${env.JOB_NAME}' and Build Number : '${env.BUILD_NUMBER}'",
+                body:"GOOD NEWS \n Your Pipeline is successfully Completely \n Build URL : '${env.BUILD_URL}'"
+            )
         }
         failure {
             echo "❌ Pipeline Failed."
+            emailext(
+                to:"sahilsaykar24@gmail.com"
+                subject:"Failed Pipeline.. '${env.JOB_NAME}' with build Number: '${env.BUILD_NUMBER}'",
+                body:"BAD NEWS \n Your Pipeline Is Failed ..\n Build URL : '${env.BUILD_URL}'"
+            )
         }
     }
 }
