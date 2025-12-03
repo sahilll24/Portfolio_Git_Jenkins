@@ -120,7 +120,7 @@ stage('Quality Gate') {
         failure {
             echo "❌ Pipeline Failed."
             emailext(
-                to:"sahilsaykar24@gmail.com"
+                to:"sahilsaykar24@gmail.com",
                 subject:"Failed Pipeline.. '${env.JOB_NAME}' with build Number: '${env.BUILD_NUMBER}'",
                 body:"BAD NEWS \n Your Pipeline Is Failed ..\n Build URL : '${env.BUILD_URL}'"
             )
