@@ -99,6 +99,16 @@ stage('Quality Gate') {
         }
     }
 }
+stage("Performing Unit Test"){
+    steps {
+        echo "Running Unit Test..."
+        sh "npm run test"
+        dir("server") {
+           echo "Running Unit Test In Server.."
+           sh "npm run test"
+        }
+    }
+}
         stage('Archive Reports') {
             steps {
                 archiveArtifacts artifacts: 'coverage/**', allowEmptyArchive: true
