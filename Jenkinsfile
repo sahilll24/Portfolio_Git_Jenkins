@@ -3,7 +3,6 @@ pipeline {
 
     tools {
         nodejs "node20"
-       
     }
 
     options {
@@ -12,127 +11,137 @@ pipeline {
 
     environment {
         SONAR_TOKEN = credentials('sonar-token')
+        DOCKERHUB = credentials('dockerhub-cred')
     }
 
     stages {
 
         stage('Checkout Code') {
             steps {
-                echo "Pulling code from GitHub..."
+                echo "📥 Pulling code from GitHub..."
                 checkout scm
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Install & Test Frontend') {
             steps {
-                echo "Installing frontend dependencies..."
+                echo "📦 Installing frontend deps..."
                 sh 'npm install'
 
-                echo "Installing backend dependencies..."
-                dir('server') {
-                    sh 'npm install'
+                echo "🧪 Running frontend tests..."
+                sh 'npm run test -- --coverage --reporter=junit --outputFile=frontend-tests.xml'
+            }
+
+            post {
+                always {
+                    junit '**/frontend-tests.xml'
                 }
             }
         }
 
-        stage('Run Tests (Vitest)') {
+        stage('Install & Test Backend') {
             steps {
-                echo "Running frontend tests..."
-                sh 'npm run test -- --coverage --reporter=junit --outputFile=frontend-tests.xml'
-
-                echo "Running backend tests..."
                 dir('server') {
+                    echo "📦 Installing backend deps..."
+                    sh 'npm install'
+
+                    echo "🧪 Running backend tests..."
                     sh 'npm run test -- --coverage --reporter=junit --outputFile=backend-tests.xml'
                 }
             }
             post {
                 always {
-                    junit '**/*tests.xml'
+                    junit '**/backend-tests.xml'
                 }
             }
         }
 
-        stage('Build Frontend (Vite)') {
+        stage('Build Frontend') {
             steps {
+                echo "⚙️ Building Vite frontend..."
                 sh 'npm run build'
             }
         }
-       stage('Pre-Cleanup') {
-    steps {
-        sh """
-            echo "Cleaning previous Sonar artifacts..."
-            rm -rf .sonar
-            rm -rf .scannerwork
-        """
-    }
-}
 
-stage('SonarQube Analysis') {
-    steps {
-        echo "Running SonarQube scan..."
+        stage('SonarQube Scan') {
+            steps {
+                echo "🔎 Running SonarQube analysis..."
 
-        withSonarQubeEnv('sonar-server') {
-            sh """
-                sonar-scanner \
-                -Dsonar.projectKey=Portfolio_Git_Jenkins \
-                -Dsonar.projectName=Portfolio_Git_Jenkins \
-                -Dsonar.projectVersion=1.0 \
-                -Dsonar.sources=src \
-                -Dsonar.tests=src \
-                -Dsonar.test.inclusions=**/*.test.ts,**/*.test.tsx \
-                -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/*.config.js,**/*.config.ts \
-                -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
-                -Dsonar.typescript.tsconfigPath=tsconfig.json \
-                -Dsonar.sourceEncoding=UTF-8 \
-                -Dsonar.host.url=http://localhost:9000 \
-                -Dsonar.login=$SONAR_TOKEN
-            """
+                withSonarQubeEnv('sonar-server') {
+                    sh """
+                        sonar-scanner \
+                        -Dsonar.projectKey=Portfolio_Git_Jenkins \
+                        -Dsonar.sources=src,server \
+                        -Dsonar.exclusions=**/node_modules/**,**/dist/** \
+                        -Dsonar.tests=src,server \
+                        -Dsonar.test.inclusions=**/*.test.ts,**/*.test.tsx \
+                        -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=$SONAR_TOKEN
+                    """
+                }
+            }
         }
-    }
-}
 
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 3, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
 
-stage('Quality Gate') {
-    steps {
-        timeout(time: 3, unit: 'MINUTES') {
-            waitForQualityGate abortPipeline: true
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    echo "🐳 Building Docker image with multi-stage Dockerfile..."
+                    dockerImage = docker.build("sahil0724/portfolio:${env.BUILD_NUMBER}")
+                }
+            }
         }
-    }
-}
-stage("Performing Unit Test"){
-    steps {
-        echo "Running Unit Test..."
-        sh "npm run test"
-        dir("server") {
-           echo "Running Unit Test In Server.."
-           sh "npm run test"
+
+        stage('Push Docker Image to DockerHub') {
+            steps {
+                script {
+                    echo "📤 Pushing Docker image to DockerHub..."
+
+                    sh """
+                        echo "${DOCKERHUB_PSW}" | docker login -u "${DOCKERHUB_USR}" --password-stdin
+                        
+                        docker tag sahil0724/portfolio:${env.BUILD_NUMBER} sahil0724/portfolio:latest
+
+                        docker push sahil0724/portfolio:${env.BUILD_NUMBER}
+                        docker push sahil0724/portfolio:latest
+
+                        docker logout
+                    """
+                }
+            }
         }
-    }
-}
+
         stage('Archive Reports') {
             steps {
                 archiveArtifacts artifacts: 'coverage/**', allowEmptyArchive: true
                 archiveArtifacts artifacts: 'dist/**', allowEmptyArchive: true
             }
         }
-        
     }
 
     post {
         success {
             echo "🎉 Pipeline Completed Successfully!"
             emailext(
-                to:"sahilsaykar24@gmail.com",
-                subject:"Successfully Pipeline Excuted..'${env.JOB_NAME}' and Build Number : '${env.BUILD_NUMBER}'",
-                body:"GOOD NEWS \n Your Pipeline is successfully Completely \n Build URL : '${env.BUILD_URL}'"
+                to: "sahilsaykar24@gmail.com",
+                subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Your pipeline completed successfully.\nBuild URL: ${env.BUILD_URL}"
             )
         }
         failure {
             echo "❌ Pipeline Failed."
             emailext(
-                to:"sahilsaykar24@gmail.com",
-                subject:"Failed Pipeline.. '${env.JOB_NAME}' with build Number: '${env.BUILD_NUMBER}'",
-                body:"BAD NEWS \n Your Pipeline Is Failed ..\n Build URL : '${env.BUILD_URL}'"
+                to: "sahilsaykar24@gmail.com",
+                subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Your pipeline failed.\nBuild URL: ${env.BUILD_URL}"
             )
         }
     }
