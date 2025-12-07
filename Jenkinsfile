@@ -64,24 +64,19 @@ pipeline {
         }
 
         stage('SonarQube Scan') {
-            steps {
-                echo "🔎 Running SonarQube analysis..."
+    steps {
+        echo "🔎 Running SonarQube analysis..."
 
-                withSonarQubeEnv('sonar-server') {
-                    sh """
-                        sonar-scanner \
-                        -Dsonar.projectKey=Portfolio_Git_Jenkins \
-                        -Dsonar.sources=src,server \
-                        -Dsonar.exclusions=**/node_modules/**,**/dist/** \
-                        -Dsonar.tests=src,server \
-                        -Dsonar.test.inclusions=**/*.test.ts,**/*.test.tsx \
-                        -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
-                        -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.login=$SONAR_TOKEN
-                    """
-                }
-            }
+        withSonarQubeEnv('sonar-server') {
+            sh """
+                sonar-scanner \
+                -Dproject.settings=sonar-project.properties \
+                -Dsonar.login=$SONAR_TOKEN
+            """
         }
+    }
+}
+
 
         stage('Quality Gate') {
             steps {
