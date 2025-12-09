@@ -113,6 +113,25 @@ pipeline {
                 }
             }
         }
+stage('Deploy to AWS EC2') {
+    steps {
+        withCredentials([
+            string(credentialsId: 'EC2_USER', variable: 'EC2_USER'),
+            string(credentialsId: 'EC2_IP', variable: 'EC2_IP')
+        ]) {
+            sshagent(['EC2_SSH_KEY']) {
+                sh '''
+                    ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP "
+                        docker pull sahil0724/portfolio:latest
+                        docker stop portfolio || true
+                        docker rm portfolio || true
+                        docker run -d --name portfolio -p 80:80 -p 3001:3001 --restart=always sahil0724/portfolio:latest
+                    "
+                '''
+            }
+        }
+    }
+}
 
         stage('Archive Reports') {
             steps {
