@@ -128,7 +128,9 @@ Handling pipeline failures & rollbacks
 ## 👤 Author
 Sahil Mahesh Saykar
 DevOps Engineer | MERN Stack Developer
+
 GitHub: https://github.com/sahilll24
+
 LinkedIn: https://www.linkedin.com/in/sahil-saykar-9a11a3264/
 
 ## 💬 Recruiter Note
