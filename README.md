@@ -35,9 +35,10 @@ Jenkins Pipeline
    ├─ Quality Gate Validation (Fail Pipeline if Failed)
    ├─ Build Docker Image (Multi-Stage)
    ├─ Push Image to DockerHub
-   ├─ SSH Deployment to AWS EC2
+   ├─ Deploy to AWS EC2 via SSH
    ├─ Run Docker Container
    └─ Archive Reports & Send Email Notifications
+
 
 ## 🛠️ Tech Stack (ATS-Optimized)
 DevOps & Cloud
@@ -85,7 +86,6 @@ Stop & remove old container
 Run new container with restart policy
 No manual server deployment required after setup.
 
-📂 Repository Structure
 ├── server/                    # Backend (Node.js / Express)
 ├── src/                       # Frontend source
 ├── Dockerfile                 # Multi-stage Docker build
@@ -94,6 +94,7 @@ No manual server deployment required after setup.
 ├── sonar-project.properties   # SonarQube config
 ├── coverage/                  # Test coverage reports
 └── README.md
+
 
 ## 🔐 Pipeline Security
 
