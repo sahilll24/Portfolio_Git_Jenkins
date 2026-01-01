@@ -1,73 +1,135 @@
-# Welcome to your Lovable project
+## 🚀 End-to-End MERN Stack CI/CD Deployment using Jenkins, SonarQube & AWS EC2
 
-## Project info
+Production-style CI/CD automation project demonstrating how a full-stack MERN application is built, tested, quality-checked, containerized, and deployed to AWS EC2 using Jenkins pipelines.
+From GitHub commit → live production deployment with automated quality gates
 
-**URL**: https://lovable.dev/projects/20e21975-7c3b-4243-b1ce-37cd46195756
+## 👀 Recruiter Summary (30-Second Read)
 
-## How can I edit this code?
+✔ Built a real Jenkins Declarative Pipeline
+✔ Automated frontend & backend testing
+✔ Integrated SonarQube Quality Gates
+✔ Dockerized full application using multi-stage build
+✔ Deployed container to AWS EC2 via pipeline (no manual steps)
 
-There are several ways of editing your application.
+This project reflects how CI/CD works in real companies, not tutorials.
 
-**Use Lovable**
+## 🧑‍💻 What I Built
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/20e21975-7c3b-4243-b1ce-37cd46195756) and start prompting.
+A production-ready MERN stack portfolio application with a fully automated CI/CD pipeline that:
+Runs tests for frontend & backend
+Enforces code quality using SonarQube
+Builds and pushes Docker images
+Deploys the application automatically to AWS EC2
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🔄 CI/CD Pipeline Flow (Actual Implementation)
+GitHub Commit
+   ↓
+Jenkins Pipeline
+   ├─ Checkout Code
+   ├─ Install Frontend Dependencies
+   ├─ Run Frontend Tests (JUnit + Coverage)
+   ├─ Install Backend Dependencies
+   ├─ Run Backend Tests (JUnit + Coverage)
+   ├─ Build Vite Frontend
+   ├─ SonarQube Static Code Analysis
+   ├─ Quality Gate Validation (Fail Pipeline if Failed)
+   ├─ Build Docker Image (Multi-Stage)
+   ├─ Push Image to DockerHub
+   ├─ SSH Deployment to AWS EC2
+   ├─ Run Docker Container
+   └─ Archive Reports & Send Email Notifications
 
-**Use your preferred IDE**
+## 🛠️ Tech Stack (ATS-Optimized)
+DevOps & Cloud
+Jenkins (Declarative Pipeline)
+SonarQube (Static Code Analysis, Quality Gates)
+Docker (Multi-Stage Builds)
+DockerHub
+AWS EC2
+Linux
+Git & GitHub
+Application
+React (Vite)
+Node.js
+Express.js
+MongoDB
+Tailwind CSS
+Nginx
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🧪 Testing & Code Quality
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Frontend & backend tests executed inside Jenkins
+Test reports generated in JUnit XML format
+Code coverage archived as pipeline artifacts
+SonarQube enforces:
+Bugs
+Code smells
+Vulnerabilities
+Pipeline automatically stops deployment if quality gate fails
 
-Follow these steps:
+## 🐳 Dockerization Strategy
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Multi-stage Dockerfile for optimized image size
+Application runs inside a Docker container
+Exposed ports:
+80 – Frontend (Nginx)
+3001 – Backend API
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## ☁️ AWS Deployment
 
-# Step 3: Install the necessary dependencies.
-npm i
+Deployed on AWS EC2
+Jenkins connects via SSH using credentials
+Deployment steps:
+Pull latest Docker image
+Stop & remove old container
+Run new container with restart policy
+No manual server deployment required after setup.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+📂 Repository Structure
+├── server/                    # Backend (Node.js / Express)
+├── src/                       # Frontend source
+├── Dockerfile                 # Multi-stage Docker build
+├── Jenkinsfile                # CI/CD Pipeline
+├── nginx.conf                 # Nginx configuration
+├── sonar-project.properties   # SonarQube config
+├── coverage/                  # Test coverage reports
+└── README.md
 
-**Edit a file directly in GitHub**
+## 🔐 Pipeline Security
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Credentials managed via Jenkins Credentials Manager
+Secure handling of:
+SonarQube token
+DockerHub credentials
+EC2 SSH key
 
-**Use GitHub Codespaces**
+## 📈 Why This Project Stands Out
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+❌ Not a basic MERN app
+❌ Not manual deployment
+❌ Not theory
 
-## What technologies are used for this project?
+✅ Real CI/CD
+✅ Real quality gates
+✅ Real AWS deployment
+✅ Real Jenkins pipeline errors & fixes
 
-This project is built with:
+This project demonstrates hands-on DevOps ownership.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🧠 Key Learnings
 
-## How can I deploy this project?
+Jenkins pipeline design & debugging
+SonarQube integration with CI/CD
+Docker multi-stage builds
+Secure credential management
+AWS EC2 production deployments
+Handling pipeline failures & rollbacks
 
-Simply open [Lovable](https://lovable.dev/projects/20e21975-7c3b-4243-b1ce-37cd46195756) and click on Share -> Publish.
+## 👤 Author
+Sahil Mahesh Saykar
+DevOps Engineer | MERN Stack Developer
+GitHub: https://github.com/sahilll24
+LinkedIn: https://www.linkedin.com/in/sahil-saykar-9a11a3264/
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 💬 Recruiter Note
+This repository shows how I think and work as a DevOps engineer, not just tools I’ve used.
